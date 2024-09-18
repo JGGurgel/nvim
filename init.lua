@@ -181,18 +181,7 @@ require("lazy").setup({
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
-			--
-
-			--
-
-			--
-
-			--
-
 			require("telescope").setup({
-
-				--
-
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -232,6 +221,20 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
+
+			vim.keymap.set(
+				"n",
+				"<leader>sF",
+				"<cmd>Telescope find_files hidden=true no_ignore=true<cr>",
+				{ desc = "Find File Everywhere" }
+			)
+			vim.keymap.set("n", "<leader>sT", function()
+				require("telescope.builtin").live_grep({
+					additional_args = function(args)
+						return vim.list_extend(args, { "--hidden", "--no-ignore" })
+					end,
+				})
+			end, { desc = "Text Everywhere" })
 		end,
 	},
 
@@ -432,6 +435,8 @@ require("lazy").setup({
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+
+			require("luasnip.loaders.from_snipmate").lazy_load()
 			luasnip.config.setup({})
 
 			cmp.setup({
@@ -495,7 +500,7 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("nord")
+			vim.cmd.colorscheme("tokyonight-night")
 
 			vim.cmd.hi("Comment gui=none")
 		end,
