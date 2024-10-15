@@ -30,6 +30,10 @@ vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "J", "mzJ`z")
+
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -56,6 +60,11 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 --vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 --vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 --vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
+vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
+vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
+vim.keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
+vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -235,6 +244,31 @@ require("lazy").setup({
 					end,
 				})
 			end, { desc = "Text Everywhere" })
+
+			local opts = { noremap = true, silent = true }
+			function vim.getVisualSelection()
+				vim.cmd('noau normal! "vy"')
+				local text = vim.fn.getreg("v")
+				vim.fn.setreg("v", {})
+
+				text = string.gsub(text, "\n", "")
+				if #text > 0 then
+					return text
+				else
+					return ""
+				end
+			end
+
+			--vim.keymap.set("n", "<space>g", ":Telescope current_buffer_fuzzy_find<cr>", opts)
+			--vim.keymap.set("v", "<space>s", function()
+			--	local text = vim.getVisualSelection()
+			--	builtin.current_buffer_fuzzy_find({ default_text = text })
+			--end, opts)
+
+			vim.keymap.set("v", "<space>sw", function()
+				local text = vim.getVisualSelection()
+				builtin.live_grep({ default_text = text })
+			end, opts)
 		end,
 	},
 
@@ -500,7 +534,7 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("nord")
 
 			vim.cmd.hi("Comment gui=none")
 		end,
@@ -579,7 +613,7 @@ require("lazy").setup({
 
 	--
 	{ "shaunsingh/nord.nvim" },
-
+	{ "nvim-treesitter/nvim-treesitter-context" },
 	{ import = "custom.plugins" },
 }, {
 	ui = {
