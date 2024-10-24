@@ -534,7 +534,7 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("nord")
+			vim.cmd.colorscheme("kanagawa-dragon")
 
 			vim.cmd.hi("Comment gui=none")
 		end,
@@ -614,6 +614,8 @@ require("lazy").setup({
 	--
 	{ "shaunsingh/nord.nvim" },
 	{ "nvim-treesitter/nvim-treesitter-context" },
+	{ "rebelot/kanagawa.nvim" },
+	{ "EdenEast/nightfox.nvim" },
 	{ import = "custom.plugins" },
 }, {
 	ui = {
