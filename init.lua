@@ -46,6 +46,7 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left wind
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<C-q>", "<C-w><C-p>", { desc = "Close current window" })
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -191,6 +192,11 @@ require("lazy").setup({
 		},
 		config = function()
 			require("telescope").setup({
+				pickers = {
+					find_files = {
+						hidden = false,
+					},
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -302,7 +308,9 @@ require("lazy").setup({
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
 					--
-
+					--
+					--
+					vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help)
 					local map = function(keys, func, desc)
 						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
@@ -534,7 +542,7 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("kanagawa-dragon")
+			vim.cmd.colorscheme("nordfox")
 
 			vim.cmd.hi("Comment gui=none")
 		end,
@@ -617,6 +625,24 @@ require("lazy").setup({
 	{ "rebelot/kanagawa.nvim" },
 	{ "EdenEast/nightfox.nvim" },
 	{ import = "custom.plugins" },
+	{
+		"f-person/git-blame.nvim",
+		-- load the plugin at startup
+		event = "VeryLazy",
+		-- Because of the keys part, you will be lazy loading this plugin.
+		-- The plugin wil only load once one of the keys is used.
+		-- If you want to load the plugin at startup, add something like event = "VeryLazy",
+		-- or lazy = false. One of both options will work.
+		opts = {
+			-- your configuration comes here
+			-- for example
+			enabled = true, -- if you want to enable the plugin
+			message_template = " <summary> • <date> • <author> • <<sha>>", -- template for the blame message, check the Message template section for more options
+			date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
+			virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+			delay = 1000,
+		},
+	},
 }, {
 	ui = {
 
