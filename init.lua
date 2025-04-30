@@ -60,6 +60,8 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -218,6 +220,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+			vim.keymap.set("n", "<C-f>", builtin.find_files, { desc = "[S]earch [F]iles" })
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
@@ -455,6 +458,7 @@ require("lazy").setup({
 			-- end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				php = { "easy-coding-standard" },
 
 				--
 			},
@@ -505,7 +509,7 @@ require("lazy").setup({
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					--["<C-f>"] = cmp.mapping.scroll_docs(4),
 
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
@@ -662,6 +666,8 @@ require("lazy").setup({
 			delay = 300,
 		},
 	},
+	{ "Mofiqul/vscode.nvim" },
+	{ "github/copilot.vim" },
 }, {
 	ui = {
 
