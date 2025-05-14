@@ -390,15 +390,7 @@ require("lazy").setup({
 			--
 
 			local servers = {
-
-				--
-
-				--
-
-				--
-
 				lua_ls = {
-
 					settings = {
 						Lua = {
 							completion = {
@@ -423,8 +415,17 @@ require("lazy").setup({
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
-
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						server.settings = {
+							pylsp = {
+								plugins = {
+									pycodestyle = {
+										ignore = { "E501", "W504" },
+										maxLineLength = 100,
+									},
+								},
+							},
+						}
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
