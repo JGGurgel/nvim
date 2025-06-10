@@ -25,13 +25,15 @@ vim.opt.scrolloff = 10
 
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("x", "<leader>p", '"_dP')
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+--vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "J", "mzJ`z")
 
+vim.keymap.set("n", "<leader>K", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<leader>J", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
@@ -65,10 +67,6 @@ vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("i", "<C-c>", "<Esc>")
---vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
---vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
---vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
---vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
 vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
@@ -107,9 +105,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-
 	"tpope/vim-sleuth",
-
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -122,7 +118,6 @@ require("lazy").setup({
 			},
 		},
 	},
-
 	{
 		"folke/which-key.nvim",
 		event = "VimEnter",
@@ -175,11 +170,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	--
-
-	--
-
 	{
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
@@ -188,15 +178,12 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
-
 				build = "make",
-
 				cond = function()
 					return vim.fn.executable("make") == 1
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
@@ -294,7 +281,6 @@ require("lazy").setup({
 		ft = "lua",
 		opts = {
 			library = {
-
 				{ path = "luvit-meta/library", words = { "vim%.uv" } },
 			},
 		},
@@ -317,9 +303,6 @@ require("lazy").setup({
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
-					--
-					--
-					--
 					vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help)
 					local map = function(keys, func, desc)
 						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
@@ -510,28 +493,10 @@ require("lazy").setup({
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					--["<C-f>"] = cmp.mapping.scroll_docs(4),
 
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
-					--['<CR>'] = cmp.mapping.confirm { select = true },
-					--['<Tab>'] = cmp.mapping.select_next_item(),
-					--['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
 					["<C-Space>"] = cmp.mapping.complete({}),
-
-					--
-
-					--["<C-l>"] = cmp.mapping(function()
-					--	if luasnip.expand_or_locally_jumpable() then
-					--		luasnip.expand_or_jump()
-					--	end
-					--end, { "i", "s" }),
-					--["<C-h>"] = cmp.mapping(function()
-					--	if luasnip.locally_jumpable(-1) then
-					--		luasnip.jump(-1)
-					--	end
-					--end, { "i", "s" }),
 				}),
 				sources = {
 					{
@@ -548,14 +513,10 @@ require("lazy").setup({
 	},
 
 	{
-
-		--
-
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
 			vim.cmd.colorscheme("nordfox")
-
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
@@ -573,8 +534,6 @@ require("lazy").setup({
 			--
 
 			require("mini.ai").setup({ n_lines = 500 })
-
-			--
 
 			require("mini.surround").setup()
 
@@ -668,7 +627,6 @@ require("lazy").setup({
 		},
 	},
 	{ "Mofiqul/vscode.nvim" },
-	{ "github/copilot.vim" },
 }, {
 	ui = {
 
