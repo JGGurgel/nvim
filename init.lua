@@ -17,8 +17,8 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+--vim.opt.list = true
+--vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
@@ -63,6 +63,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 vim.keymap.set("n", "<C-s>", ":w<CR>")
+vim.keymap.set("n", "<C-x>", ":q<CR>")
 
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
@@ -215,6 +216,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = '[S]earch git branchs' })
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -261,12 +263,6 @@ require("lazy").setup({
 					return ""
 				end
 			end
-
-			--vim.keymap.set("n", "<space>g", ":Telescope current_buffer_fuzzy_find<cr>", opts)
-			--vim.keymap.set("v", "<space>s", function()
-			--	local text = vim.getVisualSelection()
-			--	builtin.current_buffer_fuzzy_find({ default_text = text })
-			--end, opts)
 
 			vim.keymap.set("v", "<space>sw", function()
 				local text = vim.getVisualSelection()
