@@ -110,19 +110,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	{ import = "custom.plugins" },
 	"tpope/vim-sleuth",
-	{
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		},
-	},
 	{
 
 		"folke/lazydev.nvim",
@@ -133,103 +122,12 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ "Bilal2453/luvit-meta", lazy = true },
 	{
-		"stevearc/conform.nvim",
-		event = { "BufWritePre" },
-		cmd = { "ConformInfo" },
-		keys = {
-			{
-				"<leader>f",
-				function()
-					require("conform").format({ async = true, lsp_fallback = true })
-				end,
-				mode = "",
-				desc = "[F]ormat buffer",
-			},
-		},
-		opts = {
-			notify_on_error = false,
-			format_on_save = false,
-			-- format_on_save = function(bufnr)
-			-- 	local disable_filetypes = { c = true, cpp = true }
-			-- 	return {
-			-- 		timeout_ms = 500,
-			-- 		lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-			-- 	}
-			-- end,
-			formatters_by_ft = {
-				lua = { "stylua" },
-				php = { "easy-coding-standard" },
-
-				--
-			},
-		},
+		"folke/todo-comments.nvim",
+		event = "VimEnter",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = { signs = false },
 	},
-
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-
-			{
-				"L3MON4D3/LuaSnip",
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-				dependencies = {},
-			},
-			"saadparwaiz1/cmp_luasnip",
-
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-		},
-		config = function()
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-
-			require("luasnip.loaders.from_snipmate").lazy_load()
-			luasnip.config.setup({})
-
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
-				},
-				completion = { completeopt = "menu,menuone,noinsert" },
-
-				--
-
-				mapping = cmp.mapping.preset.insert({
-
-					["<C-n>"] = cmp.mapping.select_next_item(),
-
-					["<C-p>"] = cmp.mapping.select_prev_item(),
-
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
-					["<C-Space>"] = cmp.mapping.complete({}),
-				}),
-				sources = {
-					{
-						name = "lazydev",
-
-						group_index = 0,
-					},
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "path" },
-				},
-			})
-		end,
-	},
-
 	{
 		"folke/tokyonight.nvim",
 		priority = 1000,
@@ -238,100 +136,9 @@ require("lazy").setup({
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
-
-	{
-		"folke/todo-comments.nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
-	},
-
-	{
-		"echasnovski/mini.nvim",
-		config = function()
-			--
-
-			require("mini.ai").setup({ n_lines = 500 })
-
-			require("mini.surround").setup()
-
-			local statusline = require("mini.statusline")
-
-			statusline.setup({ use_icons = vim.g.have_nerd_font })
-
-			---@diagnostic disable-next-line: duplicate-set-field
-			statusline.section_location = function()
-				return "%2l:%-2v"
-			end
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		main = "nvim-treesitter.configs",
-
-		config = function()
-			local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-			parser_config.blade = {
-				install_info = {
-					url = "https://github.com/EmranMR/tree-sitter-blade",
-					files = { "src/parser.c" },
-					branch = "main",
-				},
-				filetype = "blade",
-			}
-		end,
-		opts = {
-			ensure_installed = {
-				"bash",
-				"c",
-				"diff",
-				"html",
-				"lua",
-				"luadoc",
-				"markdown",
-				"markdown_inline",
-				"query",
-				"vim",
-				"vimdoc",
-			},
-
-			auto_install = true,
-			highlight = {
-				enable = true,
-
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-		},
-
-		--
-	},
-
-	--
+	{ "Bilal2453/luvit-meta", lazy = true },
 	{ "shaunsingh/nord.nvim" },
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		config = function()
-			require("treesitter-context").setup({
-				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-				multiwindow = false, -- Enable multiwindow support.
-				max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
-				min_window_height = 10, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-				line_numbers = true,
-				multiline_threshold = 20, -- Maximum number of lines to show for a single context
-				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-				mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
-				-- Separator between context and content. Should be a single character string, like '-'.
-				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-				separator = nil,
-				zindex = 20, -- The Z-index of the context window
-				on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-			})
-		end,
-	},
 	{ "EdenEast/nightfox.nvim" },
-	{ import = "custom.plugins" },
 	{ "Mofiqul/vscode.nvim" },
 }, {
 	ui = {
