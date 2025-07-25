@@ -89,7 +89,6 @@ vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) 
 vim.keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -123,58 +122,6 @@ require("lazy").setup({
 				changedelete = { text = "~" },
 			},
 		},
-	},
-	{
-		"folke/which-key.nvim",
-		event = "VimEnter",
-		config = function()
-			require("which-key").setup({
-				icons = {
-
-					mappings = vim.g.have_nerd_font,
-
-					keys = vim.g.have_nerd_font and {} or {
-						Up = "<Up> ",
-						Down = "<Down> ",
-						Left = "<Left> ",
-						Right = "<Right> ",
-						C = "<C-…> ",
-						M = "<M-…> ",
-						D = "<D-…> ",
-						S = "<S-…> ",
-						CR = "<CR> ",
-						Esc = "<Esc> ",
-						ScrollWheelDown = "<ScrollWheelDown> ",
-						ScrollWheelUp = "<ScrollWheelUp> ",
-						NL = "<NL> ",
-						BS = "<BS> ",
-						Space = "<Space> ",
-						Tab = "<Tab> ",
-						F1 = "<F1>",
-						F2 = "<F2>",
-						F3 = "<F3>",
-						F4 = "<F4>",
-						F5 = "<F5>",
-						F6 = "<F6>",
-						F7 = "<F7>",
-						F8 = "<F8>",
-						F9 = "<F9>",
-						F10 = "<F10>",
-						F11 = "<F11>",
-						F12 = "<F12>",
-					},
-				},
-			})
-			require("which-key").add({
-				{ "<leader>c", group = "[C]ode" },
-				{ "<leader>d", group = "[D]ocument" },
-				{ "<leader>r", group = "[R]ename" },
-				{ "<leader>s", group = "[S]earch" },
-				{ "<leader>w", group = "[W]orkspace" },
-				{ "<leader>t", group = "[T]oggle" },
-				{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
-			})
-		end,
 	},
 	{
 		"nvim-telescope/telescope.nvim",
