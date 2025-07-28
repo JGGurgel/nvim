@@ -137,7 +137,7 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("nordfox")
+			vim.cmd.colorscheme("nightfox")
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
