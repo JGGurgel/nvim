@@ -24,11 +24,11 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.bo.softtabstop = 4
-vim.o.inccommand = 'split'
+vim.o.inccommand = "split"
 vim.o.confirm = true
 
---vim.opt.list = true
---vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("x", "<leader>p", '"_dP')
@@ -39,7 +39,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "J", "mzJ`z")
 
-vim.keymap.set("n", "<leader>ç", "ggVGd", {desc = "Deletes hole file"})
+vim.keymap.set("n", "<leader>ç", "ggVGd", { desc = "Deletes hole file" })
 
 vim.keymap.set("n", "<leader>K", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>J", "<cmd>cprev<CR>zz")
@@ -47,7 +47,6 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- remover binds padrões de setas para acostumar com hjkl;
 vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
@@ -93,6 +92,17 @@ vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current t
 vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+vim.keymap.set("n", "<leader>tt", "<cmd>tabnew<CR>:terminal<CR>a")
+vim.keymap.set("n", "<leader>1", ":BufferLineGoToBuffer 1<CR>")
+vim.keymap.set("n", "<leader>2", ":BufferLineGoToBuffer 2<CR>")
+vim.keymap.set("n", "<leader>3", ":BufferLineGoToBuffer 3<CR>")
+vim.keymap.set("n", "<leader>4", ":BufferLineGoToBuffer 4<CR>")
+vim.keymap.set("n", "<leader>5", ":BufferLineGoToBuffer 5<CR>")
+vim.keymap.set("n", "<leader>6", ":BufferLineGoToBuffer 6<CR>")
+vim.keymap.set("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>")
+vim.keymap.set("n", "<leader>8", ":BufferLineGoToBuffer 8<CR>")
+vim.keymap.set("n", "<leader>9", ":BufferLineGoToBuffer 9<CR>")
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
