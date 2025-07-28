@@ -24,6 +24,9 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.bo.softtabstop = 4
+vim.o.inccommand = 'split'
+vim.o.confirm = true
+
 --vim.opt.list = true
 --vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
@@ -36,9 +39,11 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "J", "mzJ`z")
 
+vim.keymap.set("n", "<leader>ç", "ggVGd", {desc = "Deletes hole file"})
+
 vim.keymap.set("n", "<leader>K", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>J", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+Vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
